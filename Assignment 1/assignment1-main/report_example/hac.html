@@ -1,0 +1,165 @@
+<meta charset="utf-8" emacsmode="-*- markdown -*">
+**CMSC848F - Assignment 1**
+**Name: Hritvik Choudhari**
+
+**UID: 119208793**
+
+
+Rendering your first mesh
+===============================================================================
+
+![Figure [cow]: Cow render](../Results/section0_1_render.jpg)
+
+Practicing with Cameras
+===============================================================================
+
+360-degree Renders
+--------------------------------------------------------------------------------
+
+![Figure [cow_rotate]: Cow render 360](../Results/section1_1.gif)
+
+
+Re-creating the Dolly Zoom
+--------------------------------------------------------------------------------
+
+![Figure [dolly]: Dolly Zoom](../Results/section1_2.gif)
+
+
+Practicing with Meshes
+===============================================================================
+
+Constructing a Tetrahedron
+--------------------------------------------------------------------------------
+
+![Figure [Tetrahedron]: Tetrahedron](../Results/section2_1.gif)
+
+A tetrahedron mesh typically consists of 4 vertices and 4 triangular faces. Each vertex is connected to every other vertex by an edge, and each face is a triangle formed by connecting three of the vertices.
+
+Constructing a Cube
+--------------------------------------------------------------------------------
+
+![Figure [Cube]: Cube](../Results/section2_2.gif)
+
+A cube mesh has 8 vertices and 6 faces. Each vertex of a cube is connected to three edges, and each face is a square formed by connecting four vertices.
+
+Re-texturing a mesh
+===============================================================================
+
+**color1** = torch.tensor([0, 1, 1]) [Cyan]
+
+**color2** = torch.tensor([0, 1, 1]) [Maroon]
+
+Both colors have very high contrast and choosing it for this task provides us with a very smooth transition from one color to other.
+
+![Figure [Re-textured mesh]: Cube](../Results/section3.gif)
+
+Camera Transformations
+===============================================================================
+
+**R_relative** is a 3x3 rotation matrix representing relative rotation of the camera around the mesh object. By changing R_relative we can camera's orientation viewpoint with respect to the mesh object.
+
+**T_relative** is a 1x3 translation vector representing relative transition of the camera with respect to the mesh object. By changing T_relative we can change camera's distance in all 3 axis with respect to the mesh object.
+
+Below are some examples with respective R_relative and T_relative. 
+
+Pose 1
+--------------------------------------------------------------------------------
+
+**R_relative** = 90 degree rotation about z-axis
+
+**T_relative** = No translation
+
+![Figure [Pose 1]: Pose 1](../Results/section4_1.jpg)
+
+Pose 2
+--------------------------------------------------------------------------------
+
+**R_relative** = No rotation
+
+**T_relative** = Translation of 3 units along z-axis
+
+![Figure [Pose 2]: Pose 2](../Results/section4_2.jpg)
+
+Pose 3
+--------------------------------------------------------------------------------
+
+**R_relative** = 10 degree rotation about y-axis
+
+**T_relative** = Translation of 0.75 units, -0.25 units, -0.45 units along x,y,z axis respectively
+
+![Figure [Pose 3]: Pose 3](../Results/section4_3.jpg)
+
+Pose 4
+--------------------------------------------------------------------------------
+
+**R_relative** = 90 degree rotation about y-axis
+
+**T_relative** = Translation of 3 units, 0 units, 3 units along x,y,z axis respectively
+
+![Figure [Pose 4]: Pose 4](../Results/section4_4.jpg)
+
+Rendering Generic 3D Representations
+===============================================================================
+
+Rendering Point Clouds from RGB-D Images
+--------------------------------------------------------------------------------
+
+![Figure [img1_pc]: The point cloud corresponding to the first image](../Results/section5_1_1.gif)
+
+![Figure [img2_pc]: The point cloud corresponding to the second image](../Results/section5_1_2.gif)
+
+![Figure [img3_pc]: The point cloud formed by the union of the first 2 point clouds.](../Results/section5_1_comb.gif)
+
+Parametric Functions
+--------------------------------------------------------------------------------
+
+![Figure [torus_pc]: Point cloud of Torus using parametric functions](../Results/section5_2.gif)
+
+Implicit Surfaces
+--------------------------------------------------------------------------------
+
+![Figure [torus_pc]: Point cloud of Torus using implicit surface](../Results/section5_3.gif)
+
+The decision between rendering as a mesh and rendering as a point cloud depends on the particular use cases and needs. Here are some of the important trade-offs to take into account:
+
+**1. Rendering Speed:**
+
+Mesh Rendering: *Slower due to complex rasterization of triangles.*
+
+Point Cloud Rendering: *Faster as it involves rendering individual points.*
+
+**2. Rendering Quality:**
+
+Mesh Rendering: *High-quality with smooth surfaces and realistic shading.*
+
+Point Cloud Rendering: *Lower quality, especially for surface details.*
+
+**3. Ease of Use:**
+
+Mesh Rendering: *More complex with vertex and face definitions.*
+
+Point Cloud Rendering: *Easier to work with, especially for 3D scanning data.*
+
+**4. Memory Usage:**
+
+Mesh Rendering: *High memory usage, especially for complex models.*
+
+Point Cloud Rendering: *More memory-efficient, even for complex scenes.*
+
+**5. Interactivity:**
+
+Mesh Rendering: *Challenging for real-time deformations and simulations.*
+
+Point Cloud Rendering: *Well-suited for real-time applications and dynamic visualizations.*
+
+**Applications:**
+
+Mesh Rendering: *Common in gaming, CAD, simulations, and detailed graphics.*
+
+Point Cloud Rendering: *Popular in 3D scanning, LiDAR, AR, and robotics for mapping and localization.*
+
+<!-- Markdeep: -->
+<style class="fallback">body{visibility:hidden;white-space:pre;font-family:monospace}</style>
+<script src="markdeep.min.js" charset="utf-8"></script>
+<script src="https://morgan3d.github.io/markdeep/latest/markdeep.min.js?" charset="utf-8"></script>
+<script>window.alreadyProcessedMarkdeep||(document.body.style.visibility="visible")</script>
