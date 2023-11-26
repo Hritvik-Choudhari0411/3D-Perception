@@ -1,0 +1,125 @@
+<meta charset="utf-8" emacsmode="-*- markdown -*">
+**CMSC848F - Assignment 3**
+**Name: Hritvik Choudhari**
+
+**UID: 119208793**
+
+
+Classification Model
+===============================================================================
+
+Test accuracy of classification model : **0.9811**
+
+**Random test visualizations**
+
+Point cloud | Ground Truth Class | Predicted Class 
+-------|------|----------
+![](results/P1_random_vis_47_gt_0_pred_0.gif)   |  Chair   |   Chair
+![](results/P1_random_vis_569_gt_0_pred_0.gif)  |  Chair  |   Chair
+![](results/P1_random_vis_691_gt_1_pred_1.gif)  |  Vase  |   Vase
+![](results/P1_random_vis_942_gt_2_pred_2.gif)  |  Lamp  |   Lamp
+![](results/P1_random_vis_847_gt_2_pred_2.gif)  |  Lamp  |   Lamp
+
+**Failure cases visualizations**
+
+Point cloud | Ground Truth Class | Predicted Class 
+-------|------|----------
+![](results/P1_fail_vis_tensor_695_gt_tensor_1_pred_tensor_0.gif)  |  Vase   |   Chair
+![](results/P1_fail_vis_tensor_714_gt_tensor_1_pred_tensor_2.gif)  |  Vase  |   Lamp
+![](results/P1_fail_vis_tensor_916_gt_tensor_2_pred_tensor_1.gif)  |  Lamp  |   Vase
+
+**Interpretation**
+
+With the exception of a few uncommon and unclear situations, the classification model performs well overall
+in most situations. For example, in 1st case a vase that looks like a chair and a vase with borders that resembles a 
+chair are similar to the long-shaped chair in certain aspects. In case 2, the vase has a close resemblance to lamp due to its length 
+and thickness. In case 3, the top of the lamp looks like a plant and the base is very similar to a vase thereby confusing the model.
+The reason for these failure occurrences could be that the model was trained on the spatial relationship instead of the semantic meanings of each object's features. 
+As a result, it becomes deceptive in those unclear situations.
+
+
+Segmentation Model
+===============================================================================
+
+Test accuracy of Segmentation model : **0.8928**
+
+**Random test visualizations**
+
+Ground Truth PC | Predicted PC | Accuracy
+-------|------|----------
+![](results/P2_random_vis_50_gt_exp_acc.gif)   |  ![](results/P2_random_vis_50_pred_exp.gif) | 0.9327
+![](results/P2_random_vis_201_gt_exp.gif) |  ![](results/P2_random_vis_201_pred_exp.gif)   |   0.9817
+![](results/P2_random_vis_600_gt_exp.gif) |  ![](results/P2_random_vis_600_pred_exp.gif)  |   0.989 
+![](results/P2_random_vis_500_gt_exp.gif)  |  ![](results/P2_random_vis_500_pred_exp.gif)  |   0.7766 
+![](results/P2_random_vis_496_gt_exp.gif)  |  ![](results/P2_random_vis_496_pred_exp.gif)   |   0.8266
+
+**Interpretation**
+
+For the most part, the segmentation model performs well overall. Nonetheless, there are instances of poor execution as certain 
+regions do not readily distinguish from one another or have significant overlaps. This makes it harder for the model to segment and recognize the boundaries.
+
+Robustness Analysis
+===============================================================================
+
+Experiment 1: Rotated point cloud inputs (0,30,45,60,90) degrees
+--------------------------------------------------------------------------------
+**Classification**
+
+Rotation | Point Cloud | Ground truth class | Predicted class | Classification test accuracy
+-------|-------------|-------|-------|-----
+0 | ![](results/P3_random_vis_876_gt_2_pred_2_angle_0.gif)   | Vase | Vase | **0.9517**
+30 | ![](results/P3_random_vis_876_gt_2_pred_2_angle_30.gif)   | Vase | Vase | **0.7481**
+45 | ![](results/P3_random_vis_876_gt_2_pred_2_angle_45.gif)   | Vase | Vase | **0.5068**
+60 | ![](results/P3_random_vis_876_gt_2_pred_2_angle_60.gif)   | Vase | Chair | **0.3294**
+90 | ![](results/P3_random_vis_876_gt_2_pred_2_angle_90.gif)   | Vase | Chair | **0.3179**
+
+**Segmentation**
+
+Rotation | Ground truth PC | Predicted PC | Segmentation test accuracy
+-------|-------|-------|-----
+0 | ![](results/P3_random_vis_520_gt_exp_angle0.gif)  | ![](results/P3_random_vis_520_pred_exp_angle0.gif) | **0.8928**
+30 | ![](results/P3_random_vis_520_gt_exp_angle30.gif)  | ![](results/P3_random_vis_520_pred_exp_angle30.gif) | **0.6129**
+45 | ![](results/P3_random_vis_520_gt_exp_angle45.gif)  | ![](results/P3_random_vis_520_pred_exp_angle45.gif) | **0.4450**
+60| ![](results/P3_random_vis_520_gt_exp_angle60.gif)  | ![](results/P3_random_vis_520_pred_exp_angle60.gif) | **0.2765**
+90 | ![](results/P3_random_vis_520_gt_exp_angle90.gif)  | ![](results/P3_random_vis_520_pred_exp_angle90.gif) | **0.2023**
+
+**Interpretation**
+
+It is evident from the data that when the rotation degrees increases, the test accuracies decrease for both the segmentation and classification tasks. 
+We can observe that after rotating, the model's performance on the vase class considerably declines for the classification test. This could be because the model didn't 
+learn the rotation invariant property—which is crucial for the classification of rotated vase since there were no rotated objects in the training set. However, after 
+rotating 30 degrees, the model's performance for the segmentation task deteriorates significantly. This could be the result of the model merely learning spatial links 
+rather than the semantic meaning of the split pieces. As a result, the forecasts segment is erroneous based on high or low subparts.
+
+Experiment 2 : Input a different number of points (10000, 5000, 1000, 500, 100) per object
+--------------------------------------------------------------------------------
+**Classification**
+
+Num points | Point Cloud | Ground truth class | Predicted class | Classification test accuracy
+-------|-------------|-------|-------|-----
+10000 | ![](results/P3_random_vis_470_gt_0_pred_0_np_10000.gif)   | Chair | Chair | **0.9758**
+5000 | ![](results/P3_random_vis_470_gt_0_pred_0_np_5000.gif)   | Chair | Chair | **0.9748**
+1000 | ![](results/P3_random_vis_470_gt_0_pred_0_np_1000.gif)   | Chair | Chair | **0.9748**
+500 | ![](results/P3_random_vis_470_gt_0_pred_0_np_500.gif)   | Chair | Chair | **0.9685**
+100 | ![](results/P3_random_vis_470_gt_0_pred_0_np_100.gif)   | Chair | Chair | **0.9254**
+
+**Segmentation**
+
+Num points | Ground truth PC | Predicted PC | Segmentation test accuracy
+-------|-------|-------|-----
+10000 | ![](results/P3_random_vis_470_gt_exp_np10000.gif)  | ![](results/P3_random_vis_470_pred_exp_np10000.gif) | **0.8929**
+5000 | ![](results/P3_random_vis_470_gt_exp_np5000.gif)  | ![](results/P3_random_vis_470_pred_exp_np5000.gif) | **0.8928**
+1000 | ![](results/P3_random_vis_470_gt_exp_np1000.gif)  | ![](results/P3_random_vis_470_pred_exp_np1000.gif) | **0.8869**
+500| ![](results/P3_random_vis_470_gt_exp_np500.gif)  | ![](results/P3_random_vis_470_pred_exp_np500.gif) | **0.8759**
+100 | ![](results/P3_random_vis_470_gt_exp_np100.gif)  | ![](results/P3_random_vis_470_pred_exp_np100.gif) | **0.8033**
+
+**Interpretation**
+
+The findings indicate that the segmentation and classification models withstand a drop in the number of points. This could be because, despite the sharp decrease in 
+point size from 10,000 to 100, the sparse points are still able to provide a rough description of the surfaces and boundaries of the objects, which aids with segmentation 
+and classification.
+<!-- Markdeep: -->
+<style class="fallback">body{visibility:hidden;white-space:pre;font-family:monospace}</style>
+<script src="markdeep.min.js" charset="utf-8"></script>
+<script src="https://morgan3d.github.io/markdeep/latest/markdeep.min.js?" charset="utf-8"></script>
+<script>window.alreadyProcessedMarkdeep||(document.body.style.visibility="visible")</script>
