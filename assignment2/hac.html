@@ -1,0 +1,84 @@
+<meta charset="utf-8" emacsmode="-*- markdown -*">
+**CMSC848F - Assignment 2**
+**Name: Hritvik Choudhari**
+
+**UID: 119208793**
+
+
+Exploring loss functions
+===============================================================================
+Fitting a voxel grid
+--------------------------------------------------------------------------------
+
+![Figure [cow]: Left- Voxel Optimized; Right- Voxel ground truth](results/voxel_visualization.gif)
+
+Fitting a point cloud
+--------------------------------------------------------------------------------
+
+![Figure [point cloud]: Left- Point Cloud Optimized; Right- Point Cloud ground truth](results/point_cloud_visualization.gif)
+
+Fitting a mesh
+--------------------------------------------------------------------------------
+![Figure [Mesh]: Left- Mesh Optimized; Right- Mesh ground truth](results/mesh_visualization.gif)
+
+
+Reconstructing 3D from single view
+===============================================================================
+
+Image to voxel grid
+--------------------------------------------------------------------------------
+![Figure [vox_eval_1]: Left- Vox trained 1; Right- Vox ground truth](results/eval_vox_vis_235.gif width="512px") ![Figure [mesh_img_1]: Mesh img 1](results/eval_mesh_vis_235.png width="180px")
+![Figure [vox_eval_2]: Left- Vox trained 2; Right- Vox ground truth](results/eval_vox_vis_352.gif width="512px") ![Figure [mesh_img_2]: Mesh img 2](results/eval_mesh_vis_352.png width="180px")
+![Figure [vox_eval_3]: Left- Vox trained 3; Right- Vox ground truth](results/eval_vox_vis_388.gif width="512px") ![Figure [mesh_img_3]: Mesh img 3](results/eval_mesh_vis_388.png width="180px")
+
+Image to point cloud
+--------------------------------------------------------------------------------
+
+![Figure [point_cloud_eval_1]: Left- Point Cloud 1 image; Middle- Point Cloud 1 trained; Right- Point Cloud ground truth](results/eval_pc_vis_1.gif) 
+![Figure [point_cloud_eval_2]: Left- Point Cloud 2 image; Middle- Point Cloud 2 trained; Right- Point Cloud ground truth](results/eval_pc_vis_12.gif)
+![Figure [point_cloud_eval_3]: Left- Point Cloud 3 image; - Point Cloud 3 trained; Right- Point Cloud ground truth](results/eval_pc_vis_43.gif)
+
+Image to mesh
+--------------------------------------------------------------------------------
+![Figure [mesh_eval_1]: Left- Mesh trained 1; Right- Point Cloud ground truth](results/eval_mesh_vis_1.gif ) ![Figure [mesh_img_1]: Mesh img 1](results/eval_mesh_vis_1.png width="150px")
+![Figure [mesh_eval_2]: Left- Mesh trained 2; Right- Point Cloud ground truth](results/eval_mesh_vis_2.gif) ![Figure [mesh_img_2]: Mesh img 2](results/eval_mesh_vis_2.png width="150px")
+![Figure [mesh_eval_3]: Left- Mesh trained 3; Right- Point Cloud ground truth](results/eval_mesh_vis_607.gif) ![Figure [mesh_img_3]: Mesh img 3](results/eval_mesh_vis_607.png width="150px")
+
+Quantitative comparisions
+===============================================================================
+
+The Voxel Grid model's training proved to be more difficult because it required the use of intricate architectures that used 3D convolutions rather than fully connected (FC) layers. The lower F1 score obtained in comparison to the other two prediction methods can be somewhat attributed to the architectural complexity.
+
+On the other hand, the average F1 scores for the Point Cloud and Mesh prediction models were much higher. Particularly because predicting connectivity information is not necessary for the Point Cloud prediction task, it is significantly simpler. Mesh prediction, on the other hand, calls for capturing both the geometric shape and the connectivity information, making it a more complex task that, while difficult, ultimately pays off in higher F1 scores.
+
+Voxel Grid | Point Cloud | Mesh
+-----------|-------------|------
+![Avg F1@0.05 = 61.75](eval_vox.png width="256px") | ![Avg F1@0.05 = 86.783](eval_point.png width="256px") | ![Avg F1@0.05 = 87.649](eval_mesh.png width="256px") 
+
+Analyze effects of hyperparmeter variations
+===============================================================================
+
+| Effects of variation of the hyperparameter *n_points* on predictions:
+
+ 1000 | 2000  
+-----|------|------|------
+![](eval_pc_0.gif width="512px") | ![](eval_pc_n2k_0.gif width="512px")
+5000 | 10000 
+![](eval_pc_n5k_0.gif width="512px") | ![](eval_pc_n10k_0.gif width="512px")
+
+It is clear from the aforementioned plots that the model does not learn very much while training with fewer points. Lower n_points cause the model to learn broad information instead of the finer specifics. 
+
+As we increase the number of points from 1000 to 10000, the F1 score rises until it begins to slightly drop. 
+
+Quantitative comparisions
+===============================================================================
+
+Interpret your model
+
+![Figure [fig_2_6]: Yellow- GT; Blue Predicted](eval_pc_2.6.gif width="512px")
+
+<!-- Markdeep: -->
+<style class="fallback">body{visibility:hidden;white-space:pre;font-family:monospace}</style>
+<script src="markdeep.min.js" charset="utf-8"></script>
+<script src="https://morgan3d.github.io/markdeep/latest/markdeep.min.js?" charset="utf-8"></script>
+<script>window.alreadyProcessedMarkdeep||(document.body.style.visibility="visible")</script>
